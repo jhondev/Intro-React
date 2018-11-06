@@ -1,27 +1,21 @@
-import React from "react";
-import Pet from "./Pet";
-import pf from "petfinder-client";
+import React, { Component } from "react";
+import { Router, Link } from "@reach/router";
+import PetDetail from "./PetDetail";
+import PetList from "./PetList";
 
-const petfinder = pf({
-  key: process.env.API_KEY,
-  secret: process.env.API_SECRET,
-});
-
-class App extends React.Component {
-  componentDidMount = async () => {
-    const result = await petfinder.breed.list({ animal: "dog" });
-    console.log(result); //eslint-disable-line
-  };
-
+export default class App extends Component {
   render() {
     return (
       <div>
-        <h1>Adopt Me with jsx E!</h1>
-        <Pet name="Luna" animal="dog" breed="Havanese" />
-        <Pet name="Copo" animal="dog" breed="No idea" />
+        <header>
+          <Link to="/">Adopt Me A!</Link>
+        </header>
+
+        <Router>
+          <PetList path="/" />
+          <PetDetail path="/details/:id" />
+        </Router>
       </div>
     );
   }
 }
-
-export default App;
