@@ -1,17 +1,24 @@
 import React from "react";
 import Pet from "./Pet";
 import { petfinder } from "./petApi";
+import SearchBox from "./SearchBox";
+import { Consumer } from "./SearchContext";
 
 class PetList extends React.Component {
   state = {
     pets: [],
   };
+
   componentDidMount = async () => {
-    // const result = await petfinder.breed.list({ animal: "dog" });
-    // console.log(result); //eslint-disable-line
+    await this.search();
+  };
+
+  search = async () => {
     var result = await petfinder.pet.find({
       output: "full",
-      location: "Seattle, WA",
+      location: this.props.searchParams.location,
+      animal: this.props.searchParams.animal,
+      breed: this.props.searchParams.breed,
     });
 
     this.setState(() => ({
@@ -25,7 +32,8 @@ class PetList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="search">
+        <SearchBox search={this.search} />
         {this.state.pets.map(pet => (
           <Pet
             key={pet.id}
@@ -41,4 +49,10 @@ class PetList extends React.Component {
   }
 }
 
-export default PetList;
+export default function PetListWithContext(props) {
+  return (
+    <Consumer>
+      {context => <PetList {...props} searchParams={context} />}
+    </Consumer>
+  );
+}

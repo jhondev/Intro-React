@@ -7,10 +7,7 @@ class Pet extends React.Component {
     return (
       <Link to={`/details/${id}`} className="pet">
         <div className="image-container">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQieWIoUh_Wq3JGSMIbWi0SxJ7Ck-2RHQLbaaUR3qGX-CZOcwuH"
-            alt=""
-          />
+          <img src="http://placecorgi.com/300/300" alt="" />
         </div>
         <div className="info">
           <h1>{name}</h1>

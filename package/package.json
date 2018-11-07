@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write \"**/*.{js,jsx,css,json}\"",
+    "test": "",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,json}\"",
     "format:check": "prettier --list-different \"**/*.{js,jsx,css,json}\"",
-    "lint": "eslint \"**/*.{js,jsx}\"",
-    "dev": "parcel -p 12345 index.html"
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+    "dev": "parcel -p 12345 src/index.html"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
