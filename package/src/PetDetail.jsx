@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import { petfinder } from "./petApi";
 import Carousel from "./Carousel";
+import Modal from "./Modal";
 
 export default class PetDetail extends Component {
   state = {
     loading: true,
+    showModal: false,
   };
+
+  toggleModal = () =>
+    this.setState(prevState => ({ showModal: !prevState.showModal }));
 
   componentDidMount = async () => {
     const result = await petfinder.pet.get({
@@ -25,7 +30,14 @@ export default class PetDetail extends Component {
 
   render() {
     if (this.state.loading) return <div>loading...</div>;
-    const { name, description, location, animal, media } = this.state;
+    const {
+      name,
+      description,
+      location,
+      animal,
+      media,
+      showModal,
+    } = this.state;
     return (
       <div className="details">
         <Carousel media={media} />
@@ -33,7 +45,17 @@ export default class PetDetail extends Component {
         <h2>
           {animal} - {location}
         </h2>
+        <button onClick={this.toggleModal}>Adopt {name}</button>
         <p>{description}</p>
+        {showModal && (
+          <Modal>
+            <h1>Would you like to adopt {name}?</h1>
+            <div className="buttons">
+              <button onClick={this.toggleModal}>Yes</button>
+              <button onClick={this.toggleModal}>Definitely Yes</button>
+            </div>
+          </Modal>
+        )}
       </div>
     );
   }
